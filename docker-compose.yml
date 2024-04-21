@@ -1,0 +1,53 @@
+services:
+  resource:
+    # You can use this property since I already Uploaded my images 
+    # image: mojtaaba/my-resource-service
+    # in the task steps it mentions the following:
+    # For project applications use the build property as these images are not going to be pulled from a public hub.
+    # So I decided to use the build property
+    build:
+      context: ./resource-service
+    container_name: resource-container
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - MONGO_URI=mongodb://mongodb-container:27017/resource
+      - SONG_SERVICE_URL=http://song-container:3001
+    depends_on:
+      - mongodb
+
+  song:
+    # You can use this property since I already Uploaded my images 
+    # image: mojtaaba/my-song-service
+    # in the task steps it mentions the following:
+    # For project applications use the build property as these images are not going to be pulled from a public hub.
+    # So I decided to use the build property
+    build:
+      context: ./song-service
+    container_name: song-container
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - MONGO_URI=mongodb://mongodb-container:27017/song
+    depends_on:
+      - mongodb
+
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb-container
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes: 
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+volumes:
+  mongodb_data:
+
+
+
+
