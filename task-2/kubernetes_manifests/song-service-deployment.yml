@@ -22,7 +22,7 @@ spec:
             - name: PORT
               value: "3001"
             - name: MONGO_URI
-              value: "mongodb://mongodb-service:27017/song"
+              value: "mongodb://song-mongodb-service:27017/song"
           volumeMounts:
             - name: data
               mountPath: /data
