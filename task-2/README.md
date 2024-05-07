@@ -27,6 +27,7 @@ The same file can be found under different pod
 ![alt text](screenshots/image-4.png)
 
 ### Sub-task 4: Stateful Sets
+You can see my work under `resource-mongodb-statefulset.yml` & `resource-mongodb-service.yml` & `song-mongodb-statefulset.yml` & `song-mongodb-service.yml`
 I created two StatefullSets (one for each microservice)
 ![alt text](screenshots/image-5.png)
 
