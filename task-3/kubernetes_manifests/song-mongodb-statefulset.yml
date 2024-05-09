@@ -15,19 +15,29 @@ spec:
         app: song-mongodb
     spec:
       containers:
-        - name: song-mongodb
-          image: mongo:latest
-          ports:
-            - containerPort: 27017
-          volumeMounts:
-            - name: song-mongodb-data
-              mountPath: /data/db
+      - name: song-mongodb
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: song-mongodb-data
+          mountPath: /data/db
+        - name: config
+          mountPath: "/docker-entrypoint-initdb.d"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: song-db-creation
+          items:
+          - key: "mongo-init.js"
+            path: "mongo-init.js"
   volumeClaimTemplates:
-    - metadata:
-        name: song-mongodb-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: "hostpath"
-        resources:
-          requests:
-            storage: 1Gi
+  - metadata:
+      name: song-mongodb-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "hostpath"
+      resources:
+        requests:
+          storage: 1Gi

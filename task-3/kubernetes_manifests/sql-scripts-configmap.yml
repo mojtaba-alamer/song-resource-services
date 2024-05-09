@@ -1,12 +1,14 @@
-# used init.sql to create databases instead of tables (like the first module)
+# used mongo-init.js to create databases instead of tables (like the first module)
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: song-db-creation
   namespace: k8s-program
 data:
-  init.sql: |
-    CREATE DATABASE IF NOT EXISTS song;
+  mongo-init.js: |
+    print('Start creating database ##########################')
+    db = db.getSiblingDB('song');
+    print('End creating database ##########################')
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -14,5 +16,7 @@ metadata:
   name: resource-db-creation
   namespace: k8s-program
 data:
-  init.sql: |
-    CREATE DATABASE IF NOT EXISTS resource;
+  mongo-init.js: |
+    print('Start creating database ##########################')
+    db = db.getSiblingDB('resource');
+    print('End creating database ##########################')

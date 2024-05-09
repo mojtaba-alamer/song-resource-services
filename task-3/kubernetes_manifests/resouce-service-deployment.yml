@@ -20,8 +20,17 @@ spec:
             - containerPort: 3000
           env:
             - name: PORT
-              value: "3000"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: RESOURCE_PORT
             - name: MONGO_URI
-              value: "mongodb://resource-mongodb-service:27017/resource"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: RESOURCE_MONGO_URI
             - name: SONG_SERVICE_URL
-              value: "http://song-service:3001"
+              valueFrom:
+                configMapKeyRef:
+                  name: app-config
+                  key: RESOURCE_SONG_SERVICE_URL

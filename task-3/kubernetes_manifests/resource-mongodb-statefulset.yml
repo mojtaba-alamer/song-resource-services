@@ -15,19 +15,29 @@ spec:
         app: resource-mongodb
     spec:
       containers:
-        - name: resource-mongodb
-          image: mongo:latest
-          ports:
-            - containerPort: 27017
-          volumeMounts:
-            - name: resource-mongodb-data
-              mountPath: /data/db
+      - name: resource-mongodb
+        image: mongo:latest
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: resource-mongodb-data
+          mountPath: /data/db
+        - name: config
+          mountPath: "/docker-entrypoint-initdb.d"
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: resource-db-creation
+          items:
+          - key: "mongo-init.js"
+            path: "mongo-init.js"
   volumeClaimTemplates:
-    - metadata:
-        name: resource-mongodb-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        storageClassName: "hostpath"
-        resources:
-          requests:
-            storage: 1Gi
+  - metadata:
+      name: resource-mongodb-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "hostpath"
+      resources:
+        requests:
+          storage: 1Gi
