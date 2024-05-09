@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: song-mongodb-statefulset
+  namespace: k8s-program
+spec:
+  serviceName: song-mongodb-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: song-mongodb
+  template:
+    metadata:
+      labels:
+        app: song-mongodb
+    spec:
+      containers:
+        - name: song-mongodb
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: song-mongodb-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: song-mongodb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "hostpath"
+        resources:
+          requests:
+            storage: 1Gi

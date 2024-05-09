@@ -1,0 +1,18 @@
+# used init.sql to create databases instead of tables (like the first module)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: song-db-creation
+  namespace: k8s-program
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS song;
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: resource-db-creation
+  namespace: k8s-program
+data:
+  init.sql: |
+    CREATE DATABASE IF NOT EXISTS resource;

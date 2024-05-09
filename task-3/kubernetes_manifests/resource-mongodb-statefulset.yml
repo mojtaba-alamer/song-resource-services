@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: resource-mongodb-statefulset
+  namespace: k8s-program
+spec:
+  serviceName: resource-mongodb-service
+  replicas: 1
+  selector:
+    matchLabels:
+      app: resource-mongodb
+  template:
+    metadata:
+      labels:
+        app: resource-mongodb
+    spec:
+      containers:
+        - name: resource-mongodb
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: resource-mongodb-data
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: resource-mongodb-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: "hostpath"
+        resources:
+          requests:
+            storage: 1Gi

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-deployment
+  namespace: k8s-program
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resource
+  template:
+    metadata:
+      labels:
+        app: resource
+    spec:
+      containers:
+        - name: resource
+          image: mojtaaba/my-resource-service
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: MONGO_URI
+              value: "mongodb://resource-mongodb-service:27017/resource"
+            - name: SONG_SERVICE_URL
+              value: "http://song-service:3001"
