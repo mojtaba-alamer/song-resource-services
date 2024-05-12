@@ -18,6 +18,31 @@ export class SongController {
 
   constructor(private readonly songService: SongService) {}
 
+  @Get('status')
+  getStatus(): string {
+    return 'OK';
+  }
+
+  @Get('ready')
+  async isReady(): Promise<string> {
+    try {
+      await this.songService.findAll();
+      return 'OK';
+    } catch (error) {
+      return 'Not Ready'
+    }
+  }
+
+  @Get('live')
+  async isLive(): Promise<string> {
+    try {
+      await this.songService.findAll();
+      return 'OK';
+    } catch (error) {
+      return 'Not Ready'
+    }
+  }
+
   @Post()
   create(@Body() createSongDto: SongDto) {
     return this.songService.create(createSongDto);

@@ -20,6 +20,31 @@ import { Request, Response } from 'express';
 export class ResourceController {
   constructor(private readonly resourceService: ResourceService) {}
 
+  @Get('status')
+  getStatus(): string {
+    return 'OK';
+  }
+
+  @Get('ready')
+  async isReady(): Promise<string> {
+    try {
+      await this.resourceService.findAll();
+      return 'OK';
+    } catch (error) {
+      return 'Not Ready'
+    }
+  }
+
+  @Get('live')
+  async isLive(): Promise<string> {
+    try {
+      await this.resourceService.findAll();
+      return 'OK';
+    } catch (error) {
+      return 'Not Ready'
+    }
+  }
+
   @Post()
   postSongResource(@Req() req: RawBodyRequest<Request>) {
     const rawBody = req.rawBody;

@@ -19,6 +19,10 @@ export class ResourceService {
     this.songServiceUrl = configService.get('SONG_SERVICE_URL');
   }
 
+  async findAll(): Promise<any> {
+    return await this.resourceModel.find();
+  }
+
   async uploadResource(song: Buffer): Promise<object> {
     const parsedMetadata = await mm.parseBuffer(song);
     const songMetadata: SongMetadata = {
