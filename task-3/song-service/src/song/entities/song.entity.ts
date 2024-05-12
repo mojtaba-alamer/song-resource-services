@@ -22,6 +22,9 @@ export class Song {
 
   @Prop({ required: true })
   resourceId: string;
+
+  @Prop()
+  genre: string;
 }
 
 export const SongSchema = SchemaFactory.createForClass(Song);

@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: song
-        image: mojtaaba/my-song-service
+        image: mojtaaba/my-song-service:v2
         ports:
         - containerPort: 3001
         readinessProbe:
@@ -54,3 +54,8 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: data-pvc
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1

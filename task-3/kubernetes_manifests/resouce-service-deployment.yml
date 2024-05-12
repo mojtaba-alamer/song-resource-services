@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: resource
-        image: mojtaaba/my-resource-service
+        image: mojtaaba/my-resource-service:v1
         ports:
         - containerPort: 3000
         readinessProbe:

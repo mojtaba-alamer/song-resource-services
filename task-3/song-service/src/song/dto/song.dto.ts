@@ -20,6 +20,9 @@ export class SongDto {
 
   @IsNotEmpty()
   resourceId: string;
+
+  @IsOptional()
+  genre: string;
 }
 
 export const mapSongToDto = (song: SongDocument): SongDto & { id: string } => ({
@@ -30,4 +33,5 @@ export const mapSongToDto = (song: SongDocument): SongDto & { id: string } => ({
   year: song.year,
   length: song.length,
   resourceId: song.resourceId,
+  genre: song.genre
 });
