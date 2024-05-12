@@ -1,6 +1,6 @@
-# Solution for (Kubernetes overview Project)
+# Solution for (Deployment And Configuration)
 
-This project is my work according to https://git.epam.com/Siarhei_Svila/kubernetes-mentoring-program/-/blob/main/2-k8s-overview/task/README.md task
+This project is my work according to https://git.epam.com/Siarhei_Svila/kubernetes-mentoring-program/-/tree/SA-run/3-deployment-and-configuration/task task
 
 all yml files can be found under kubernetes_manifests folder
 
