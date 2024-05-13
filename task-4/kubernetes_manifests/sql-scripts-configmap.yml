@@ -1,0 +1,22 @@
+# used mongo-init.js to create databases instead of tables (like the first module)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: song-db-creation
+  namespace: k8s-program
+data:
+  mongo-init.js: |
+    print('Start creating database ##########################')
+    db = db.getSiblingDB('song');
+    print('End creating database ##########################')
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: resource-db-creation
+  namespace: k8s-program
+data:
+  mongo-init.js: |
+    print('Start creating database ##########################')
+    db = db.getSiblingDB('resource');
+    print('End creating database ##########################')

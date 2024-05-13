@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-deployment
+  namespace: k8s-program
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resource
+  template:
+    metadata:
+      labels:
+        app: resource
+    spec:
+      containers:
+      - name: resource
+        image: mojtaaba/my-resource-service:v1
+        ports:
+        - containerPort: 3000
+        readinessProbe:
+          httpGet:
+            path: /api/resources/ready
+            port: 3000
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/resources/live
+            port: 3000
+          initialDelaySeconds: 10
+          periodSeconds: 15
+        startupProbe:
+          httpGet:
+            path: /api/resources/status
+            port: 3000
+          failureThreshold: 30
+          periodSeconds: 10
+        env:
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: RESOURCE_PORT
+        - name: MONGO_URI
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: RESOURCE_MONGO_URI
+        - name: SONG_SERVICE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: RESOURCE_SONG_SERVICE_URL
